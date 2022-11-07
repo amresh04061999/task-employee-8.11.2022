@@ -1,19 +1,28 @@
 {
-  "posts": [
+  "employee": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "id": 21,
+      "firstName": "amresh",
+      "lastName": "prasad",
+      "email": "amresh1098@gmail.com",
+      "phoneNo": 1234,
+      "salary": "12345"
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "firstName": "amresh",
+      "lastName": "prasad",
+      "email": "amresh1098@gmail.com",
+      "phoneNo": 12345678,
+      "salary": "12345",
+      "id": 22
+    },
+    {
+      "firstName": "Amresh",
+      "lastName": "Prasad",
+      "email": "amresh1098@gmail.com",
+      "phoneNo": 12345678,
+      "salary": "12",
+      "id": 23
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

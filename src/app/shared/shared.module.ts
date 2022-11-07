@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PhoneNoMaskingDirective } from './oevrlay/directive/phone-no-masking.directive';
-
+import { OverlayModule } from '@angular/cdk/overlay';
+import { DialogService } from './oevrlay/dialog.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    PhoneNoMaskingDirective
+   
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    OverlayModule,
+    ReactiveFormsModule,
+  ],
+  providers:[DialogService]
 })
 export class SharedModule { }
