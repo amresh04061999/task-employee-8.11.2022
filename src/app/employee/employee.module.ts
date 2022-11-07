@@ -8,19 +8,27 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EmployeeHttpService } from './Services/employee-http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EmployeeResolver } from './employee.resolver';
+import { EmployeeAdapter } from './Services/employee.adapter';
+import { SharedModule } from '../shared/shared.module';
+import { ConformMessageComponent } from './conform-message/conform-message.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 @NgModule({
   declarations: [
     EmployeeComponent,
     EmployeeFormComponent,
-    EmployeeListComponent
+    EmployeeListComponent,
+    ConformMessageComponent,
+
   ],
   imports: [
     CommonModule,
     EmployeeRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SharedModule,
+    InfiniteScrollModule
   ],
-  providers:[EmployeeHttpService,EmployeeResolver
+  providers: [EmployeeHttpService, EmployeeResolver, EmployeeAdapter
   ]
 })
 export class EmployeeModule { }

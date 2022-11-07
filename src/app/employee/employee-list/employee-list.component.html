@@ -1,43 +1,40 @@
 <div class="card">
-    <div class="card-header d-flex justify-content-between">
-        <h4>EMPLOYEE LIST</h4>
-        <div>
-            <button class="bi bi-person-plus-fill  btn btn-primary" (click)="saveEmployee()"> ADD EMPLOYEE   </button></div>
-        
-    </div>
-    <div class="card-body">
-     
-<div class="container-fuild">
-   
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th>FULL NAME</th>
-          <th>EMAIL ID</th>
-          <th>PHONE NO</th>
-          <th>SALARY</th>
-          <th>ACTION</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of employeeList">
-          <td>{{item.firstName}} {{item.lastName}}</td>
-          <td>{{item.email}}</td>
-          <td>{{item.phoneNo}}</td>
-          <td>{{item.salary * 80 | currency:"INR":"symbol"}}</td>
-          <td><i class="bi bi-pencil-square text-success fs-5" (click)="editEmployee(item)"></i>
-              <i class="bi bi-trash-fill fs-5 text-danger ms-4" (click)="deleteEmploye(item)"></i>
-         </td>
-        </tr>
-         
-       
-      </tbody>
-    </table>
-    
-  </div>
-
+  <div class="card-header d-flex justify-content-between">
+    <h4>EMPLOYEE LIST</h4>
+    <div>
+      <button class="bi bi-person-plus-fill  btn btn-primary" (click)="saveEmployee()"> ADD EMPLOYEE </button>
     </div>
   </div>
 
-
-
+  <div class="card-body ">
+    <div class="container-fuild ">
+      <div class="container" infinite-scroll [infiniteScrollDistance]="distance" [infiniteScrollThrottle]="0"
+        [scrollWindow]="false" (scrolled)=" onScrolllist()" style="height: 700px; overflow-y: scroll;">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th>id</th>
+              <th>FULL NAME</th>
+              <th>EMAIL ID</th>
+              <th>PHONE NO</th>
+              <th>SALARY</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of employeeList">
+              <td>{{item.id}}</td>
+              <td>{{item.fullName}}</td>
+              <td>{{item.email}}</td>
+              <td>{{item.phoneNo}}</td>
+              <td>{{item.salary | currency:80 }}</td>
+              <td><i class="bi bi-pencil-square text-success fs-5" (click)="editEmployee(item)"></i>
+                <i class="bi bi-trash-fill fs-5 text-danger ms-4" (click)="deleteEmploye(item)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,14 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Employee } from '../model/Employee.model';
 
 @Injectable(
   {
-  providedIn: 'root'
-}
+    providedIn: 'root'
+  }
 )
 export class CommunicationService {
-  public getAddList=new  Subject<Employee>;
-  public patchvalue=new  Subject<Employee>;
-  constructor() { }
+
+  public getAddList$: Observable<Employee>
+  private getAddList: Subject<Employee>;
+
+  public patchvalue$: Observable<Employee>
+  public patchvalue: Subject<Employee>;
+
+  constructor() {
+    this.getAddList = new Subject();
+    this.patchvalue = new Subject()
+    this.getAddList$ = this.getAddList.asObservable()
+    this.patchvalue$ = this.patchvalue.asObservable()
+  }
+  getempoyee(employee: Employee) {
+    this.getAddList.next(employee)
+  }
+
+  getpatchvalue(employe: Employee) {
+    this.patchvalue.next(employe)
+  }
 }

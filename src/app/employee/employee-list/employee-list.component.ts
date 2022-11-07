@@ -11,45 +11,50 @@ import { EmployeeHttpService } from '../Services/employee-http.service';
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss'],
 })
+
 export class EmployeeListComponent implements OnInit {
   // getemployee list variable
   public employeeList: Employee[];
-  public fullname:any
+  public fullname: any
+  public pageNumber = 20;
+  public distance = 2;
+  public pageSize = 1;
   constructor(
     private dilogservices: DialogService,
     private httpService: EmployeeHttpService,
-    private comunicationService:CommunicationService,
-    private router:Router
+    private comunicationService: CommunicationService,
+    private router: Router
   ) {
     this.employeeList = [];
   }
-
   ngOnInit(): void {
-    this.getEmployeeList();
-      // Update add record in table suing subject
-     this.comunicationService.getAddList.subscribe((res:any)=>{
+    // Update add record in table suing subject
+    this.comunicationService.getAddList$.subscribe((res: any) => {
+      if (res) {
+        this.getEmployeeList()
+      }
       this.employeeList.push(res)
-     })
+    })
+    this.getEmployeeList();
   }
   /**
    * get employee
    */
   public getEmployeeList() {
-    this.httpService.getEmployee().subscribe({
+    this.httpService.getEmployee(this.pageSize, this.pageNumber).subscribe({
       next: (value) => {
-        this.employeeList = value;
+        this.employeeList = this.employeeList.concat(value);
         console.log(value);
       },
     });
   }
-
-/**
- *  Delete employe function 
- * @param item 
- */
+  /**
+   *  Delete employe function
+   * @param item
+   */
   public deleteEmploye(item: Employee) {
     const deletePop = confirm(
-      `Are you sure you want to delete this data? Delete ${item.firstName}`
+      `Are you sure you want to delete this data? Delete ${item.fullName}`
     );
     if (deletePop) {
       this.httpService.deleteEmployee(Number(item.id)).subscribe({
@@ -59,19 +64,31 @@ export class EmployeeListComponent implements OnInit {
         error: (error) => {
           // this.notification.showError("fail Delete","delete")
         },
-        complete: () => {},
+        complete: () => { },
       });
     } else {
     }
   }
+  /**
+   *
+   */
   public saveEmployee() {
     this.dilogservices.open(EmployeeFormComponent);
   }
-
-  public editEmployee(item:Employee) {
-    this.dilogservices.open(EmployeeFormComponent);
-    this.router.navigate(['employee/edit',item.id]);
-    // this.comunicationService.patchvalue.next(item);
+  /**
+   *
+   * @param item
+   */
+  public editEmployee(item: Employee) {
+    const overlayRef = this.dilogservices.open(EmployeeFormComponent);
+    overlayRef.instance.employeeForm.patchValue(item);
+  }
+  /**
+   *
+   */
+  onScrolllist() {
+    this.pageSize++;
+    this.getEmployeeList();
   }
 
 }

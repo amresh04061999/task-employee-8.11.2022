@@ -3,17 +3,20 @@ import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { DialogService } from './oevrlay/dialog.service';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { CurrencyPipe } from './pipe/currency.pipe';
+import { PhoneNomaskingDirective } from '../employee/directive/phone-nomasking.directive';
 
 @NgModule({
   declarations: [
-   
+    CurrencyPipe,
+    PhoneNomaskingDirective
   ],
   imports: [
     CommonModule,
     OverlayModule,
     ReactiveFormsModule,
   ],
-  providers:[DialogService]
+  exports: [CurrencyPipe, PhoneNomaskingDirective],
+  providers: [DialogService,]
 })
 export class SharedModule { }

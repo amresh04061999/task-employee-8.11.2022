@@ -6,6 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { DialogService } from 'src/app/shared/oevrlay/dialog.service';
+import { ConformMessageComponent } from '../conform-message/conform-message.component';
 import { CommunicationService } from '../Services/communication.service';
 import { EmployeeHttpService } from '../Services/employee-http.service';
 
@@ -17,65 +19,75 @@ import { EmployeeHttpService } from '../Services/employee-http.service';
 export class EmployeeFormComponent implements OnInit {
   public employeeForm: FormGroup;
   public isSubmited = false;
-  employeid:any
+  employeid: any
   constructor(
     private fb: FormBuilder,
     private httpService: EmployeeHttpService,
-    private  comunicationServices:CommunicationService,
+    private comunicationServices: CommunicationService,
     private activatedRouter: ActivatedRoute,
+    private dilogservices: DialogService,
   ) {
     /**
      * create form builder
      * @returns
      */
     this.employeeForm = this.fb.group({
-      // id: [],
+      id: [''],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.required],
       phoneNo: ['', Validators.required],
       salary: ['', Validators.required],
+      fullName: ['']
     });
-    
     this.activatedRouter.params.subscribe((res) => {
       this.employeid = res['id'];
-      if (this.employeid) {
-        this.getcEmployeedetailsById();
-      }
+      console.log(this.employeeForm.value);
+
     });
-
-
   }
 
   ngOnInit(): void {
-    // this.comunicationServices.patchvalue.subscribe((res)=>{
-    //   console.log(res);
-    //   this.employeeForm.patchValue(res)
-    // })
-  }
-  
-  // get company list
-  public getcEmployeedetailsById(): void {
-    this.httpService.getEmployeeId(Number(this.employeid)).subscribe({
-      next: (res) => {
-        // value pach in form in edit time
-        this.employeeForm.patchValue(res);
-      },
-    });
+    this.comunicationServices.patchvalue$.subscribe((res: any) => {
+      console.log(res);
+      setTimeout(() => {
+        this.employeeForm.patchValue(res)
+      }, 200);
+    })
   }
 
-
+  /**
+   *
+   */
   public SaveEmployee() {
     this.isSubmited = true;
-    console.log('dd')
-      this.httpService.addEmployee(this.employeeForm.value).subscribe((result)=>{
-        this.comunicationServices.getAddList.next(result)
+    if (this.employeeForm.valid) {
+      this.dilogservices.close()
+      this.httpService.addEmployee(this.employeeForm.value).subscribe((result) => {
+        this.comunicationServices.getempoyee(result)
         console.log(result)
-          this.reset();
+        this.reset();
       });
-    
+    }
+
   }
-  public cancel() {}
+  /**
+   *
+   */
+  public cancel() {
+    if (this.employeeForm.touched) {
+      const close = confirm('are you sure')
+      if (close) {
+        this.dilogservices.close()
+
+      }
+    } else {
+      this.dilogservices.close()
+    }
+    // this.dilogservices.open(ConformMessageComponent)
+    // } else {
+    // }
+  }
 
   /**
    * Reset companyForm
@@ -88,4 +100,5 @@ export class EmployeeFormComponent implements OnInit {
   get employee(): { [key: string]: AbstractControl } {
     return this.employeeForm.controls;
   }
+
 }
