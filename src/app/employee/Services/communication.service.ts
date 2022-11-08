@@ -10,16 +10,19 @@ import { Employee } from '../model/Employee.model';
 export class CommunicationService {
 
   public getAddList$: Observable<Employee>
-  private getAddList: Subject<Employee>
+  public getAddList: Subject<Employee>
+  public getEditList: Subject<Employee>
+
 
   constructor() {
     this.getAddList = new Subject();
     this.getAddList$ = this.getAddList.asObservable()
+    this.getEditList = new Subject();
+
   }
- 
+
   getEmpoyee(employee: Employee) {
     this.getAddList.next(employee)
   }
 
- 
 }

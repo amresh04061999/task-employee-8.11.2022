@@ -1,13 +1,9 @@
-<!-- Modal HTML -->
-<div id="myModal" class="modal fade">
-  <div class="modal-dialog modal-confirm">
-    <div class="modal-content">
-      <div class="modal-header flex-column">
-        <h4 class="modal-title w-100 mt-3">Are you sure?</h4>
-        <div class="modal-footer justify-content-center">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Yes</button>
-          <button type="button" class="btn btn-danger">No</button>
-        </div>
-      </div>
-    </div>
+<div class="conform-model bg-white p-3">
+  <div class="heading">
+    <h4 class=" text-center mt-3">Are You Sure Cancel?</h4>
   </div>
+  <div class="mt-4  d-flex justify-content-center">
+    <button type="button" class="btn btn-secondary" (click)="onYes()">Yes</button>
+    <button type="button" class="btn btn-danger ms-4">No</button>
+  </div>
+</div>

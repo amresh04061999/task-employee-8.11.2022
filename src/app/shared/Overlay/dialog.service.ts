@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class DialogService {
   overlayRef: any;
-  constructor(private overlay: Overlay,) {}
+  constructor(private overlay: Overlay,) { }
   /**
    * Open a custom component in an overlay
    */
@@ -14,18 +14,16 @@ export class DialogService {
     // Globally centered position strategy
     const positionStrategy = this.overlay
       .position()
-      .global().right().top()
+      .global().centerVertically().centerHorizontally()
     // Create the overlay with customizable options
     this.overlayRef = this.overlay.create({
       positionStrategy,
       backdropClass: 'overlay-backdrop',
       hasBackdrop: true,
-      panelClass: 'overlay-panel',
-      width: 500,
-      height:600
     });
     const portal = new ComponentPortal(component);
     const instance = this.overlayRef.attach(portal);
+
     return instance;
   }
   close() {
