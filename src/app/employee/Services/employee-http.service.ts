@@ -1,4 +1,3 @@
-import { animate } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
@@ -11,9 +10,7 @@ export class EmployeeHttpService {
   constructor(private _http: HttpClient,
     private employeeAdapter: EmployeeAdapter) {
     this.baseURL = environment.baseURL;
-
   }
-
   /**
    *  add employee service
    * @param employee
@@ -23,7 +20,6 @@ export class EmployeeHttpService {
     const URL: string = `${this.baseURL}employee`;
     return this._http.post<Employee>(URL, employee);
   }
-
   /**\
    * getemployee service
    */
@@ -34,7 +30,6 @@ export class EmployeeHttpService {
         return item.map((item: any) => this.employeeAdapter.toResponse(item))
       }));
   }
-
   /**
    * Delete employee service
    * @param id
@@ -44,7 +39,6 @@ export class EmployeeHttpService {
     const URL: string = `${this.baseURL}employee/` + id;
     return this._http.delete<Employee>(URL);
   }
-
   /**
    * get EMployee id service
    * @param id
@@ -54,7 +48,6 @@ export class EmployeeHttpService {
     const URL: string = `${this.baseURL}employee/` + id;
     return this._http.get<Employee>(URL);
   }
-
   /**
    * Edit employee service
    * @param employee

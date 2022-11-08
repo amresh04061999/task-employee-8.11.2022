@@ -11,9 +11,11 @@ export class EmployeeAdapter {
   public toResponse(item: any) {
     const employeedata: Employee = new Employee();
     employeedata.id = item.id;
-    employeedata.email = item.email;
+    employeedata.firstName = item.firstName;
+    employeedata.lastName = item.lastName;
     employeedata.phoneNo = item.phoneNo;
     employeedata.salary = item.salary;
+    employeedata.email = item.email;
     employeedata.fullName = item.firstName.concat(" " + item.lastName);
     return employeedata
   }

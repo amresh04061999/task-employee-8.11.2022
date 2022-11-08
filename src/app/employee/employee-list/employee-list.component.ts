@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DialogService } from 'src/app/shared/oevrlay/dialog.service';
+import { DialogService } from 'src/app/shared/Overlay/dialog.service';
 import { EmployeeFormComponent } from '../employee-form/employee-form.component';
 import { Employee } from '../model/Employee.model';
 import { CommunicationService } from '../Services/communication.service';
@@ -11,45 +11,48 @@ import { EmployeeHttpService } from '../Services/employee-http.service';
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss'],
 })
-
 export class EmployeeListComponent implements OnInit {
   // getemployee list variable
   public employeeList: Employee[];
-  public fullname: any
-  public pageNumber = 20;
-  public distance = 2;
-  public pageSize = 1;
-  constructor(
-    private dilogservices: DialogService,
+  public pageNumber: number;
+  public distance :number;
+  public pageSize :number;
+  constructor(private dilogservices: DialogService,
     private httpService: EmployeeHttpService,
     private comunicationService: CommunicationService,
-    private router: Router
   ) {
     this.employeeList = [];
+    this.pageNumber = 10;
+    this.distance = 2;
+    this.pageSize = 1;
   }
   ngOnInit(): void {
-    // Update add record in table suing subject
+     //  getEmployee function call
+    this.getEmployeeList();
+
+    /***
+     * get Savedata using obesravble and update employee list
+     */
     this.comunicationService.getAddList$.subscribe((res: any) => {
       if (res) {
-        this.getEmployeeList()
+        this.getEmployeeList();
       }
-      this.employeeList.push(res)
-    })
-    this.getEmployeeList();
+    });
+   
   }
   /**
-   * get employee
+   * get employee details
    */
   public getEmployeeList() {
     this.httpService.getEmployee(this.pageSize, this.pageNumber).subscribe({
       next: (value) => {
-        this.employeeList = this.employeeList.concat(value);
-        console.log(value);
+          this.employeeList = this.employeeList.concat(value);
+        // this.employeeList=value
       },
     });
   }
   /**
-   *  Delete employe function
+   *  Delete employe d
    * @param item
    */
   public deleteEmploye(item: Employee) {
@@ -70,13 +73,14 @@ export class EmployeeListComponent implements OnInit {
     }
   }
   /**
-   *
+   * Open overlay component
    */
   public saveEmployee() {
     this.dilogservices.open(EmployeeFormComponent);
   }
+
   /**
-   *
+   * Open overlay component and patch value
    * @param item
    */
   public editEmployee(item: Employee) {
@@ -84,11 +88,10 @@ export class EmployeeListComponent implements OnInit {
     overlayRef.instance.employeeForm.patchValue(item);
   }
   /**
-   *
+   *Scroll pagination
    */
   onScrolllist() {
     this.pageSize++;
     this.getEmployeeList();
   }
-
 }

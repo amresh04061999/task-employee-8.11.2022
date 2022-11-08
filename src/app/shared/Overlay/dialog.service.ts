@@ -3,15 +3,10 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable, } from '@angular/core';
 import { Subject } from 'rxjs';
 
-
-
 @Injectable()
 export class DialogService {
   overlayRef: any;
-  // public close: Subject<boolean>
-  constructor(private overlay: Overlay,) {
-    // this.close = new Subject();
-  }
+  constructor(private overlay: Overlay,) {}
   /**
    * Open a custom component in an overlay
    */
@@ -19,9 +14,7 @@ export class DialogService {
     // Globally centered position strategy
     const positionStrategy = this.overlay
       .position()
-      .global()
-      .centerHorizontally()
-      .centerVertically();
+      .global().right().top()
     // Create the overlay with customizable options
     this.overlayRef = this.overlay.create({
       positionStrategy,
@@ -29,8 +22,8 @@ export class DialogService {
       hasBackdrop: true,
       panelClass: 'overlay-panel',
       width: 500,
+      height:600
     });
-
     const portal = new ComponentPortal(component);
     const instance = this.overlayRef.attach(portal);
     return instance;

@@ -5,16 +5,11 @@ import { NgControl } from '@angular/forms';
   selector: '[appPhoneNomasking]'
 })
 export class PhoneNomaskingDirective {
-
+  
   constructor(public ngControl: NgControl) { }
-
   @HostListener('ngModelChange', ['$event'])
   onModelChange(event: any) {
     this.onInputChange(event, false);
-  }
-  @HostListener('keydown.backspace', ['$event'])
-  keydownBackspace(event: any) {
-    this.onInputChange(event.target.value, true);
   }
   onInputChange(event: any, backspace: any) {
     let newVal = event.replace(/\D/g, '');

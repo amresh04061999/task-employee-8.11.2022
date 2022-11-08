@@ -18,7 +18,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     EmployeeFormComponent,
     EmployeeListComponent,
     ConformMessageComponent,
-
   ],
   imports: [
     CommonModule,

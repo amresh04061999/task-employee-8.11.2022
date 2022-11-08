@@ -5,11 +5,10 @@
       <button class="bi bi-person-plus-fill  btn btn-primary" (click)="saveEmployee()"> ADD EMPLOYEE </button>
     </div>
   </div>
-
   <div class="card-body ">
     <div class="container-fuild ">
       <div class="container" infinite-scroll [infiniteScrollDistance]="distance" [infiniteScrollThrottle]="0"
-        [scrollWindow]="false" (scrolled)=" onScrolllist()" style="height: 700px; overflow-y: scroll;">
+        [scrollWindow]="false" (scrolled)=" onScrolllist()" style="height: 400px; overflow-y: scroll;">
         <table class="table">
           <thead class="thead-dark">
             <tr>
